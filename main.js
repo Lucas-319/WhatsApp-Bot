@@ -1,11 +1,12 @@
+require('dotenv').config();
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
-const chatIdTeste = "120363391407848498@g.us";
-const chatIdTestByLucas = "120363416834910047@g.us";
-const chatId = '557193631886-1433983949@g.us';
-const chatJulia = "557499990520@c.us";
-const messageConfirmation = 'Olá!\n\nEu sou o Kowalski 🐧, uma automação criada para auxiliar a comunidade do curso de ADS - IFBA, campus SSA.\n\nPra entrar no grupo de ADS, por favor informar o número da matrícula.';
+const chatIdTeste = process.env.CHAT_ID_TESTE;
+const chatIdTestByLucas = process.env.CHAT_ID_TEST_BY_LUCAS;
+const chatId = process.env.CHAT_ID;
+const chatJulia = process.env.CHAT_JULIA;
+const messageConfirmation = process.env.MESSAGE_CONFIRMATION;
 
 const wwebVersion = '2.3000.1015010030-alpha';
 
