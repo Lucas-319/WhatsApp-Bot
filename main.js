@@ -6,7 +6,7 @@ const chatIdTeste = process.env.CHAT_ID_TESTE;
 const chatIdTestByLucas = process.env.CHAT_ID_TEST_BY_LUCAS;
 const chatId = process.env.CHAT_ID;
 const chatJulia = process.env.CHAT_JULIA;
-const messageConfirmation = process.env.MESSAGE_CONFIRMATION;
+const messageConfirmation = 'Olá!\n\nEu sou o Kowalski 🐧, uma automação criada para auxiliar a comunidade do curso de ADS - IFBA, campus SSA.\n\nPra entrar no grupo de ADS, por favor informar o número da matrícula.';
 
 const wwebVersion = '2.3000.1015010030-alpha';
 
@@ -46,7 +46,7 @@ client.on('group_membership_request', async (notification) => {
 });
 
 client.on('group_join', async (notification) => {
-    if (notification.chatId === chatId) {
+    if (notification.chatId === chatId || notification.chatId === chatIdTestByLucas) {
         const chat = await notification.getChat();
         const user = notification.id.participant;
         return chat.sendMessage(`Bem-vindo ao grupo, @${user.split('@')[0]}!`, {
