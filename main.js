@@ -67,6 +67,17 @@ client.on('message', message => {
     return true
 });
 
+client.on('message_revoke_everyone', async (after, before) => {
+    const messageText = `@${before.author.split('@')[0]} enviou uma mensagem e apagou! \n Mensagem: ${before.body}`;
+    if (before) {
+        console.log(before);
+        return await client.sendMessage(before.from, messageText, {
+            mentions: [before.author]
+        });
+    }
+    return await client.sendMessage(before.from, messageText);
+});
+
 client.on('ready', () => {
     console.log('Client is ready!');
 });
