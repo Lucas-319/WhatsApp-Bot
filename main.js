@@ -40,13 +40,14 @@ const objects = {
 client.on('group_membership_request', async (notification) => {
     const requesterId = notification.author;
     await client.sendMessage(requesterId, messageConfirmation);
+    const formattedRequesterId = requesterId.replace('55', '').split('@')[0];
     return client.sendMessage(chatJulia, `Nova solicitação de entrada no grupo de ADS: ${formattedRequesterId}`);
 });
 
 client.on('group_join', async (notification) => {
     if (notification.chatId === chatId) {
         const chat = await notification.getChat();
-        const user = notification.id.participant; // ID do usuário que entrou no grupo
+        const user = notification.id.participant;
         return chat.sendMessage(`Bem-vindo ao grupo, @${user.split('@')[0]}!`, {
             mentions: [user]
         });
