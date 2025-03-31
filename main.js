@@ -58,7 +58,7 @@ const objects = {
     '!link': 'Links úteis: https://linktr.ee/ads.ifba',
     '!discord': 'Link do Discord: https://discord.gg/PrR9byfFAn',
     '!telegram': 'Link do Telegram: https://t.me/%20Xm8nkV1i34M1NTBh',
-    '!sala': 'Link do aplicativo para encontrar a sua sala (2024.1): https://find-your-class-front.vercel.app/',
+    '!sala': 'Link do aplicativo para encontrar a sua sala (2025.1): https://find-your-class-front.vercel.app/',
     '!calendario': 'Link do calendário acadêmico: https://portal.ifba.edu.br/salvador/documentos/ensino/calendarios-academicos/2025/calendario_superior_2025.pdf',
     '!suap': 'Link do suap: https://suap.ifba.edu.br/accounts/login/?next=/',
     '!ping': 'pong 🏓',
