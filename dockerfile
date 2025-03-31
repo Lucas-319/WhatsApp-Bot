@@ -6,7 +6,14 @@ RUN apk add --no-cache \
     freetype \
     harfbuzz \
     ca-certificates \
-    ttf-freefont
+    ttf-freefont \
+    font-noto \
+    font-noto-cjk \
+    font-noto-emoji \
+    font-noto-extra \
+    libstdc++ \
+    udev \
+    ttf-dejavu
 
 WORKDIR /usr/src/app
 
