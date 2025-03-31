@@ -1,6 +1,11 @@
 require('dotenv').config();
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
+const qrcodeImage = require('qrcode');
+const express = require('express');
+
+const app = express();
+let qrCodeData = null;
 
 const chatIdTeste = process.env.CHAT_ID_TESTE;
 const chatIdTestByLucas = process.env.CHAT_ID_TEST_BY_LUCAS;
@@ -8,23 +13,45 @@ const chatId = process.env.CHAT_ID;
 const chatJulia = process.env.CHAT_JULIA;
 const messageConfirmation = 'Olá!\n\nEu sou o Kowalski 🐧, uma automação criada para auxiliar a comunidade do curso de ADS - IFBA, campus SSA.\n\nPra entrar no grupo de ADS, por favor informar o número da matrícula.';
 
-const wwebVersion = '2.3000.1015010030-alpha';
-
 const client = new Client({
     puppeteer: {
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        headless: true,
+        executablePath: require('puppeteer').executablePath()
     },
-    authStrategy: new LocalAuth(
-        { dataPath: 'wppSessionData' }
-    ),
-    webVersionCache: {
-        type: 'remote',
-        remotePath: `https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/${wwebVersion}.html`,
-    }
+    authStrategy: new LocalAuth({ dataPath: 'wppSessionData' })
 });
 
 client.on('qr', qr => {
+    qrCodeData = qr;
+    console.log('QR Code recebido, acesse /qrcode para visualizá-lo.');
     qrcode.generate(qr, { small: true });
+});
+
+app.get('/qrcode', (_, res) => {
+    if (!qrCodeData) {
+        console.log('QR Code ainda não gerado.');
+        return res.status(404).send('QR Code ainda não gerado. Aguarde...');
+    }
+    qrcodeImage.toDataURL(qrCodeData, (err, url) => {
+        if (err) {
+            console.error('Erro ao gerar QR Code:', err);
+            return res.status(500).send('Erro ao gerar QR Code.');
+        }
+        const html = `
+            <html>
+                <body>
+                    <h1>Escaneie o QR Code abaixo:</h1>
+                    <img src="${url}" alt="QR Code" />
+                </body>
+            </html>
+        `;
+        res.send(html);
+    });
+});
+
+app.listen(8080, () => {
+    console.log('Servidor HTTP rodando na porta 8080. Acesse /qrcode para visualizar o QR Code.');
 });
 
 const objects = {
@@ -53,7 +80,7 @@ client.on('group_join', async (notification) => {
             mentions: [user]
         });
     }
-    return true
+    return true;
 });
 
 client.on('message', message => {
@@ -65,7 +92,7 @@ client.on('message', message => {
             return message.reply('Comando não encontrado. Use !help para ver a lista de comandos disponíveis.');
         }
     }
-    return true
+    return true;
 });
 
 client.on('message_revoke_everyone', async (after, before) => {
@@ -78,6 +105,14 @@ client.on('message_revoke_everyone', async (after, before) => {
         const messageText = `Uma mensagem foi apagada! \n Mensagem: ${before.body}`;
         return await client.sendMessage(before.from, messageText);
     }
+});
+
+client.on('auth_failure', (msg) => {
+    console.error('Falha na autenticação:', msg);
+});
+
+client.on('disconnected', (reason) => {
+    console.error('Cliente desconectado:', reason);
 });
 
 client.on('ready', () => {
