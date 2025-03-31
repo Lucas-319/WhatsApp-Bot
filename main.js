@@ -1,6 +1,11 @@
 require('dotenv').config();
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
+const qrcodeImage = require('qrcode');
+const express = require('express'); // Adicionado para criar o servidor HTTP
+
+const app = express(); // Inicializa o servidor HTTP
+let qrCodeData = null; // Variável para armazenar o QR Code
 
 const chatIdTeste = process.env.CHAT_ID_TESTE;
 const chatIdTestByLucas = process.env.CHAT_ID_TEST_BY_LUCAS;
@@ -24,7 +29,34 @@ const client = new Client({
 });
 
 client.on('qr', qr => {
+    qrCodeData = qr; // Armazena o QR Code para servir via HTTP
     qrcode.generate(qr, { small: true });
+});
+
+// Endpoint para servir o QR Code como imagem
+app.get('/qrcode', (req, res) => {
+    if (!qrCodeData) {
+        return res.status(404).send('QR Code ainda não gerado. Aguarde...');
+    }
+    qrcodeImage.toDataURL(qrCodeData, (err, url) => {
+        if (err) {
+            return res.status(500).send('Erro ao gerar QR Code.');
+        }
+        const html = `
+            <html>
+                <body>
+                    <h1>Escaneie o QR Code abaixo:</h1>
+                    <img src="${url}" alt="QR Code" />
+                </body>
+            </html>
+        `;
+        res.send(html);
+    });
+});
+
+// Inicia o servidor HTTP na porta 8080
+app.listen(8080, () => {
+    console.log('Servidor HTTP rodando na porta 8080. Acesse /qrcode para visualizar o QR Code.');
 });
 
 const objects = {
