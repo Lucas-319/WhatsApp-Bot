@@ -13,32 +13,30 @@ const chatId = process.env.CHAT_ID;
 const chatJulia = process.env.CHAT_JULIA;
 const messageConfirmation = 'Olá!\n\nEu sou o Kowalski 🐧, uma automação criada para auxiliar a comunidade do curso de ADS - IFBA, campus SSA.\n\nPra entrar no grupo de ADS, por favor informar o número da matrícula.';
 
-const wwebVersion = '2.3000.1015010030-alpha';
-
 const client = new Client({
     puppeteer: {
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        headless: true // Adicionado para rodar em modo headless
+        headless: true, // Adicionado para rodar em modo headless
+        executablePath: require('puppeteer').executablePath() // Define o caminho do Chromium
     },
-    authStrategy: new LocalAuth({ dataPath: 'wppSessionData' }),
-    webVersionCache: {
-        type: 'remote',
-        remotePath: `https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/${wwebVersion}.html`,
-    }
+    authStrategy: new LocalAuth({ dataPath: 'wppSessionData' })
 });
 
 client.on('qr', qr => {
     qrCodeData = qr;
+    console.log('QR Code recebido, acesse /qrcode para visualizá-lo.');
     qrcode.generate(qr, { small: true });
 });
 
 // Endpoint para servir o QR Code como imagem
-app.get('/qrcode', (req, res) => {
+app.get('/qrcode', (_, res) => {
     if (!qrCodeData) {
+        console.log('QR Code ainda não gerado.');
         return res.status(404).send('QR Code ainda não gerado. Aguarde...');
     }
     qrcodeImage.toDataURL(qrCodeData, (err, url) => {
         if (err) {
+            console.error('Erro ao gerar QR Code:', err);
             return res.status(500).send('Erro ao gerar QR Code.');
         }
         const html = `
