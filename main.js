@@ -2,10 +2,10 @@ require('dotenv').config();
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const qrcodeImage = require('qrcode');
-const express = require('express'); // Adicionado para criar o servidor HTTP
+const express = require('express');
 
-const app = express(); // Inicializa o servidor HTTP
-let qrCodeData = null; // Variável para armazenar o QR Code
+const app = express();
+let qrCodeData = null;
 
 const chatIdTeste = process.env.CHAT_ID_TESTE;
 const chatIdTestByLucas = process.env.CHAT_ID_TEST_BY_LUCAS;
@@ -16,8 +16,8 @@ const messageConfirmation = 'Olá!\n\nEu sou o Kowalski 🐧, uma automação cr
 const client = new Client({
     puppeteer: {
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        headless: true, // Adicionado para rodar em modo headless
-        executablePath: require('puppeteer').executablePath() // Define o caminho do Chromium
+        headless: true,
+        executablePath: require('puppeteer').executablePath()
     },
     authStrategy: new LocalAuth({ dataPath: 'wppSessionData' })
 });
@@ -28,7 +28,6 @@ client.on('qr', qr => {
     qrcode.generate(qr, { small: true });
 });
 
-// Endpoint para servir o QR Code como imagem
 app.get('/qrcode', (_, res) => {
     if (!qrCodeData) {
         console.log('QR Code ainda não gerado.');
@@ -51,7 +50,6 @@ app.get('/qrcode', (_, res) => {
     });
 });
 
-// Inicia o servidor HTTP na porta 8080
 app.listen(8080, () => {
     console.log('Servidor HTTP rodando na porta 8080. Acesse /qrcode para visualizar o QR Code.');
 });
