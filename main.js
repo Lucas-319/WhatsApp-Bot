@@ -30,7 +30,8 @@ const client = new Client({
 
 client.on('qr', qr => {
     qrCodeData = qr; // Armazena o QR Code para servir via HTTP
-    qrcode.generate(qr, { small: true });
+    //qrcode.generate(qr, { small: true });
+    console.log('QR Code gerado', qr);
 });
 
 // Endpoint para servir o QR Code como imagem
