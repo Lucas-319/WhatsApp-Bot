@@ -95,18 +95,6 @@ client.on('message', message => {
     return true;
 });
 
-client.on('message_revoke_everyone', async (after, before) => {
-    if (before && before.author) {
-        const messageText = `@${before.author.split('@')[0]} enviou uma mensagem e apagou! \n Mensagem: ${before.body}`;
-        return await client.sendMessage(before.from, messageText, {
-            mentions: [before.author]
-        });
-    } else if (before) {
-        const messageText = `Uma mensagem foi apagada! \n Mensagem: ${before.body}`;
-        return await client.sendMessage(before.from, messageText);
-    }
-});
-
 client.on('auth_failure', (msg) => {
     console.error('Falha na autenticação:', msg);
 });
