@@ -18,10 +18,9 @@ const wwebVersion = '2.3000.1015010030-alpha';
 const client = new Client({
     puppeteer: {
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        headless: true // Adicionado para rodar em modo headless
     },
-    authStrategy: new LocalAuth(
-        { dataPath: 'wppSessionData' }
-    ),
+    authStrategy: new LocalAuth({ dataPath: 'wppSessionData' }),
     webVersionCache: {
         type: 'remote',
         remotePath: `https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/${wwebVersion}.html`,
@@ -29,9 +28,8 @@ const client = new Client({
 });
 
 client.on('qr', qr => {
-    qrCodeData = qr; // Armazena o QR Code para servir via HTTP
-    //qrcode.generate(qr, { small: true });
-    console.log('QR Code gerado', qr);
+    qrCodeData = qr;
+    qrcode.generate(qr, { small: true });
 });
 
 // Endpoint para servir o QR Code como imagem
@@ -86,7 +84,7 @@ client.on('group_join', async (notification) => {
             mentions: [user]
         });
     }
-    return true
+    return true;
 });
 
 client.on('message', message => {
@@ -98,7 +96,7 @@ client.on('message', message => {
             return message.reply('Comando não encontrado. Use !help para ver a lista de comandos disponíveis.');
         }
     }
-    return true
+    return true;
 });
 
 client.on('message_revoke_everyone', async (after, before) => {
@@ -111,6 +109,14 @@ client.on('message_revoke_everyone', async (after, before) => {
         const messageText = `Uma mensagem foi apagada! \n Mensagem: ${before.body}`;
         return await client.sendMessage(before.from, messageText);
     }
+});
+
+client.on('auth_failure', (msg) => {
+    console.error('Falha na autenticação:', msg);
+});
+
+client.on('disconnected', (reason) => {
+    console.error('Cliente desconectado:', reason);
 });
 
 client.on('ready', () => {
