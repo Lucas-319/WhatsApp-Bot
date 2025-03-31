@@ -6,7 +6,6 @@ Este é um bot para WhatsApp utilizando a biblioteca [`whatsapp-web.js`](https:/
 
 - Gera um QR Code para autenticação no WhatsApp Web.
 - Responde automaticamente a comandos predefinidos.
-- Notifica mensagens apagadas por usuários.
 - Envia uma mensagem de resposta a pedidos de entrada em grupos.
 ## Comandos
 
@@ -64,7 +63,6 @@ Este é um bot para WhatsApp utilizando a biblioteca [`whatsapp-web.js`](https:/
 
 ## Eventos implementados
 
-- **`message_revoke_everyone`**: Captura mensagens deletadas e notifica o grupo.
 - **`group_membership_request`**: Responde automaticamente a pedidos de entrada em grupos.
 - **`group_join`**: Dá boas-vindas a novos membros em grupos.
 - **`message`**: Responde automaticamente a comandos predefinidos.
