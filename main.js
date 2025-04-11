@@ -63,7 +63,7 @@ const objects = {
     '!calendario': 'Link do calendário acadêmico: https://portal.ifba.edu.br/salvador/documentos/ensino/calendarios-academicos/2025/calendario_superior_2025.pdf',
     '!suap': 'Link do suap: https://suap.ifba.edu.br/accounts/login/?next=/',
     '!ping': 'pong 🏓',
-    '!help': 'Comandos disponíveis: \n\n!link \n!discord \n!telegram \n!sala \naula \n!calendario \n!suap \n!ping'
+    '!help': 'Comandos disponíveis: \n\n!link \n!discord \n!telegram \n!sala \n!aula \n!calendario \n!suap \n!ping'
 };
 
 client.on('group_membership_request', async (notification) => {
