@@ -59,10 +59,11 @@ const objects = {
     '!discord': 'Link do Discord: https://discord.gg/PrR9byfFAn',
     '!telegram': 'Link do Telegram: https://t.me/%20Xm8nkV1i34M1NTBh',
     '!sala': 'Link do aplicativo para encontrar a sua sala (2025.1): https://find-your-class-front.vercel.app/',
+    '!aula': 'Link do aplicativo "Que Aula": https://que-aula.vercel.app/',
     '!calendario': 'Link do calendário acadêmico: https://portal.ifba.edu.br/salvador/documentos/ensino/calendarios-academicos/2025/calendario_superior_2025.pdf',
     '!suap': 'Link do suap: https://suap.ifba.edu.br/accounts/login/?next=/',
     '!ping': 'pong 🏓',
-    '!help': 'Comandos disponíveis: \n\n!link \n!discord \n!telegram \n!sala \n!calendario \n!suap \n!ping'
+    '!help': 'Comandos disponíveis: \n\n!link \n!discord \n!telegram \n!sala \naula \n!calendario \n!suap \n!ping'
 };
 
 client.on('group_membership_request', async (notification) => {
