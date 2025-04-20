@@ -53,7 +53,7 @@ Este é um bot para WhatsApp utilizando a biblioteca [`whatsapp-web.js`](https:/
      ```
    - Pelo endpoint HTTP:
      ```
-     http://<IP_DA_VM>:8080/qrcode
+     http://<IP_DA_VM>:8000/qrcode
      ```
 
 ## Observações
