@@ -50,7 +50,7 @@ app.get('/qrcode', (_, res) => {
     });
 });
 
-app.listen(8080, () => {
+app.listen(8000, () => {
     console.log('Servidor HTTP rodando na porta 8080. Acesse /qrcode para visualizar o QR Code.');
 });
 

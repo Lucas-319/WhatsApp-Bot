@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  whatsapp-bot:
+    build: .
+    image: bot
+    container_name: whatsbot
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+      - "8000:8000"
+    restart: unless-stopped

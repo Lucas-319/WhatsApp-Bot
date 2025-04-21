@@ -33,27 +33,28 @@ Este é um bot para WhatsApp utilizando a biblioteca [`whatsapp-web.js`](https:/
    CHAT_JULIA=551199999999@c.us
    ```
 
-2. **Construa a imagem Docker**  
-   Execute o comando para construir a imagem Docker:
+   > **Observação sobre IDs de grupos**: Para descobrir o ID de um grupo no WhatsApp, você pode adicionar temporariamente um `console.log(message.from)` na função de manipulação de mensagens no arquivo `main.js`. Quando uma mensagem for recebida de um grupo, o ID será exibido no console. Os IDs de grupos geralmente terminam com `@g.us` enquanto os de contatos individuais terminam com `@c.us`.
+
+2. **Execute com Docker Compose**  
+   Para iniciar o bot, utilize o comando:
    ```bash
-   docker build --no-cache -t <image.name> .
+   docker compose up -d
+   ```
+   
+   Caso tenha feito alguma alteração no Dockerfile, utilize o comando:
+   ```bash
+   docker compose up -d --build
    ```
 
-3. **Rode o contêiner Docker**  
-   Execute o contêiner com o seguinte comando:
-   ```bash
-   docker run -d --name <container.name> --env-file .env -p 3000:3000 -p 8080:8080 <image.name>
-   ```
-
-4. **Escaneie o QR Code**  
+3. **Escaneie o QR Code**  
    Para autenticar o bot no WhatsApp Web, escaneie o QR Code. Você pode acessá-lo de duas formas:
    - Pelo console do contêiner:
      ```bash
-     docker logs -f <container.name>
+     docker logs -f whatsbot
      ```
    - Pelo endpoint HTTP:
      ```
-     http://<IP_DA_VM>:8080/qrcode
+     http://<IP_DA_VM>:8000/qrcode
      ```
 
 ## Observações
