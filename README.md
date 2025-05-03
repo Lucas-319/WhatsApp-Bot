@@ -14,7 +14,8 @@ Este é um bot para WhatsApp utilizando a biblioteca [`whatsapp-web.js`](https:/
 - `!link`: Links úteis  
 - `!discord`: Link do Discord  
 - `!telegram`: Link do Telegram  
-- `!sala`: Link do aplicativo para encontrar a sua sala  
+- `!sala`: Link do site "Find Your Class"
+- `!aula`: Link do site "Que Aula"
 - `!calendario`: Link do calendário acadêmico  
 - `!suap`: Link do SUAP  
 - `!ping`: Retorna "pong 🏓"  
